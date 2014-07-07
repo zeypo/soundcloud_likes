@@ -1,0 +1,8 @@
+parameters:
+    client_id: 'b45b1aa10f1ac2941910a7f0d10f8e28'
+    user_id:   '40141019'
+
+services:
+    api.soundcloud:
+        class: 'Perso\Bundle\SoundcloudBundle\Services\API\soundcloud'
+        arguments: ['%client_id%', '%user_id%']

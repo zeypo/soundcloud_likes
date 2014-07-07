@@ -1,0 +1,3 @@
+perso_soundcloud_homepage:
+    path:     /
+    defaults: { _controller: PersoSoundcloudBundle:Main:index }

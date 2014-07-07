@@ -1,0 +1,4 @@
+perso_soundcloud:
+    resource: "@PersoSoundcloudBundle/Resources/config/routing.yml"
+    prefix:   /
+
