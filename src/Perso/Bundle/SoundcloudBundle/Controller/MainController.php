@@ -8,7 +8,15 @@ class MainController extends Controller
 {
     public function indexAction()
     {
-        $test = $this->get('api.soundcloud')->downloadLikes();
         return $this->render('PersoSoundcloudBundle:Default:index.html.twig');
+    }
+
+    /**
+     * Génère un zip
+     */
+    public function getZipAction()
+    {
+        $this->get('api.soundcloud')->downloadLikes();
+        return $this->render('PersoSoundcloudBundle:Default:index.html.twig');   
     }
 }
