@@ -1,5 +1,75 @@
-<h1>Télécharger vos likes soundcloud</h1>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Soundcloud Download</title>
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    </head>
 
-<form action="{{ path('soundcloud_getlikes') }}" accept-charset="utf-8">
-    <input type="submit" name="getlikes" value="Télécharger">
-</form>
+    <body>
+        <h1>Télécharger vos likes soundcloud</h1>
+
+        <form action="{{ path('soundcloud_getlikes') }}" accept-charset="utf-8" method="post">
+            <input type="text" name="userurl" id="userurl" placeholder="Votre url soundcloud">
+            <input type="submit" name="getlikes" value="Rechercher">
+        </form>
+
+        <div>
+            {% if likes is defined %}
+                <form action="{{ path('soundcloud_download') }}" method="post" accept-charset="utf-8" id="download-form">
+                    {% for id, like in likes %}
+                        <div style="float:left; width:20%; padding:1%; overflow:hidden;">
+                        <img src="{{like.cover}}" style="float:left; width:30%">
+                        <ul style="float:left;width:40%;">
+                            <li>{{like.title}}</li>
+                            <li>{{like.artist}}</li>
+                            <li><input type="checkbox" name="id" value="{{id}}" class="checkbox"></li>
+                            <li style="display:none;"><input type="text" name="title" value="{{like.title}}"></li>
+                            <li style="display:none;"><input type="text" name="link" value="{{like.link}}"></li>
+                        </ul>
+                            
+                        </div>
+                    {% endfor %}
+                    <input type="submit" name="submit" value="Télécharger" id="download">
+                </form>
+            {% endif %}
+        </div>
+
+        <script>
+            {% if likes is defined %}
+                $(function()
+                {
+                    $('#download').on('click', function(e)
+                    {
+                        e.preventDefault();
+                        var data = $("#download-form").serializeArray();
+                        var likes = {};
+
+                        $('#download-form ul').each(function()
+                        {
+                            if($(this).find('.checkbox').prop('checked')){
+                                var id    = $(this).find('input[name=id]').val(),
+                                    title = $(this).find('input[name=title]').val(),
+                                    link  = $(this).find('input[name=link]').val();
+                                
+                                likes[id] = {};
+                                likes[id]['title'] = title;
+                                likes[id]['link']  = link;
+                            }
+                        })
+
+                        var data = {'user_id':'{{user_id}}', 'likes':likes};
+
+                        $.ajax({
+                            type: "POST",
+                            url: "{{ path('soundcloud_download') }}",
+                            data: data
+                        });
+                    })
+                })
+            {% endif %}
+        </script>
+    </body>
+</html>

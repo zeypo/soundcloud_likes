@@ -6,3 +6,6 @@ services:
     api.soundcloud:
         class: 'Perso\Bundle\SoundcloudBundle\Services\API\soundcloud'
         arguments: ['%client_id%', '%user_id%']
+    main.download:
+        class: 'Perso\Bundle\SoundcloudBundle\Services\Download\download'
+        arguments: ['%client_id%']
