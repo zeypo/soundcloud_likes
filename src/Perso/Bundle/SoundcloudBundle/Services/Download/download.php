@@ -97,7 +97,6 @@ class download
             }
         }
         
-        //if we have good files...
         if(count($valid_files)) {
             $zip = new \ZipArchive();
             if($zip->open($destination,$overwrite ? \ZIPARCHIVE::OVERWRITE : \ZIPARCHIVE::CREATE) !== true) {
