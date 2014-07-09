@@ -5,45 +5,53 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Soundcloud Download</title>
+        <link href='http://fonts.googleapis.com/css?family=Fjalla+One|Open+Sans+Condensed:300,300italic' rel='stylesheet' type='text/css'>
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 
         {% stylesheets 
             '@PersoSoundcloudBundle/Resources/public/css/reset.css'
+            '@PersoSoundcloudBundle/Resources/public/css/main.css'
             output='css/compiled/main.css' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
     </head>
 
     <body>
-        <h1>Télécharger vos likes soundcloud</h1>
-
-        <form action="{{ path('soundcloud_getlikes') }}" accept-charset="utf-8" method="post">
-            <input type="text" name="userurl" id="userurl" placeholder="Votre url soundcloud">
-            <input type="submit" name="getlikes" value="Rechercher">
-        </form>
-
-        <div>
-            {% if likes is defined %}
-                {% set rand = random(1000) %}
-                <form action="{{ path('soundcloud_download', { 'temp': rand}) }}" method="post" accept-charset="utf-8" id="download-form">
-                    {% for id, like in likes %}
-                        <div style="float:left; width:20%; padding:1%; overflow:hidden;">
-                        <img src="{{like.cover}}" style="float:left; width:30%">
-                        <ul style="float:left;width:40%;">
-                            <li>{{like.title}}</li>
-                            <li>{{like.artist}}</li>
-                            <li><input type="checkbox" name="id" value="{{id}}" class="checkbox"></li>
-                            <li style="display:none;"><input type="text" name="title" value="{{like.title}}"></li>
-                            <li style="display:none;"><input type="text" name="link" value="{{like.link}}"></li>
-                        </ul> 
-                            
-                        </div>
-                    {% endfor %}
-                    <input type="submit" name="submit" value="Télécharger" id="download">
+        <header class="header">
+            <div class="header-search">
+                <img src="../img/logo_sound_pxl.png">
+                <form action="{{ path('soundcloud_getlikes') }}" accept-charset="utf-8" method="post">
+                    <input type="text" name="userurl" id="userurl" placeholder="Votre url soundcloud">
+                    <input type="submit" name="getlikes" value="">  
                 </form>
-            {% endif %}
-        </div>
-
+            </div>
+        </header>
+            <section class="content">
+                {% if likes is defined %}
+                    {% set rand = random(1000) %}
+                    <form action="{{ path('soundcloud_download', { 'temp': rand}) }}" method="post" accept-charset="utf-8" id="download-form">
+                        {% for id, like in likes %}
+                            <article class="song">
+                                <div class="content-song ">
+                                    <img src="{{like.cover}}">
+                                    <div class="content-info">
+                                        <div class="info">
+                                            <h3>{{like.artist |  truncate(14, false, '...') }}</h3>
+                                            <h4>{{like.title |  truncate(20, false, '...') }}</h4>
+                                        </div>
+                                        <div class="checkbox_content">
+                                            <input type="checkbox" name="id" value="{{id}}" class="checkbox">
+                                        </div>
+                                        <p style="display:none;"><input type="text" name="title" value="{{like.title}}"></p>
+                                        <p style="display:none;"><input type="text" name="link" value="{{like.link}}"></p>
+                                    </div> 
+                                <div>
+                            </article>
+                        {% endfor %}
+                        <input type="submit" name="submit" value="Télécharger" id="download">
+                    </form>
+                {% endif %}
+            </section>
         <script>
             {% if likes is defined %}
                 $(function()
@@ -54,7 +62,7 @@
                         var data = $("#download-form").serializeArray();
                         var likes = {};
 
-                        $('#download-form ul').each(function()
+                        $('article.song').each(function()
                         {
                             if($(this).find('.checkbox').prop('checked')){
                                 var id    = $(this).find('input[name=id]').val(),
