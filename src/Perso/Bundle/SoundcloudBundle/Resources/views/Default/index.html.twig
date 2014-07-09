@@ -6,6 +6,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Soundcloud Download</title>
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+        {% stylesheets 
+            '@PersoSoundcloudBundle/Resources/public/css/reset.css'
+            output='css/compiled/main.css' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
     </head>
 
     <body>
@@ -18,7 +24,8 @@
 
         <div>
             {% if likes is defined %}
-                <form action="{{ path('soundcloud_download') }}" method="post" accept-charset="utf-8" id="download-form">
+                {% set rand = random(1000) %}
+                <form action="{{ path('soundcloud_download', { 'temp': rand}) }}" method="post" accept-charset="utf-8" id="download-form">
                     {% for id, like in likes %}
                         <div style="float:left; width:20%; padding:1%; overflow:hidden;">
                         <img src="{{like.cover}}" style="float:left; width:30%">
@@ -64,8 +71,12 @@
 
                         $.ajax({
                             type: "POST",
-                            url: "{{ path('soundcloud_download') }}",
-                            data: data
+                            url: "{{ path('soundcloud_download', { 'temp': rand}) }}",
+                            data: data,
+                            success: function()
+                            {
+                                document.location = "{{ path('soundcloud_getfile', {'temp': rand}) }}";
+                            }
                         });
                     })
                 })

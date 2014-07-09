@@ -30,7 +30,7 @@ class MainController extends Controller
         
         $data = $this->get('api.soundcloud')->show_likes($user_id);
         
-        return $this->render('PersoSoundcloudBundle:Default:index.html.twig', array('likes'=>$data[0], 'user_id'=>$data[1]));
+        return $this->render('PersoSoundcloudBundle:Default:index.html.twig', array('likes'=>$data[0], 'user_id'=>$data[1], 'urlzip'=>''));
     }
 
     /**
@@ -38,14 +38,21 @@ class MainController extends Controller
      * @param  (obj) request
      * @return (obj) zip
      */
-    public function getZipAction(Request $request)
+    public function getZipAction(Request $request, $temp)
     {
         //Check si le formulaire est reçu
         if($request->getMethod() == 'POST')
         {
-            $zip_path = $this->get('main.download')->getZipFile($_POST['likes'], $_POST['user_id']);
-
-            return $this->render('PersoSoundcloudBundle:Default:test.html.twig');
+            $zip_path = $this->get('main.download')->getZipFile($_POST['likes'], $_POST['user_id'], $temp);
         }
+
+        return $this->render('PersoSoundcloudBundle:Default:index.html.twig');
+
+    }
+
+    public function getFileAction($temp)
+    {
+        $this->get('main.download')->getZipurlCache($temp);
+        return;
     }
 }

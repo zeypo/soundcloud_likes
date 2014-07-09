@@ -5,11 +5,14 @@ class download
 {
     private $client_id;
     private $user_id;
-    private $fileToZip = array();
+    private $fileToZip;
+    private $tempfolder;
 
     public function __construct($client_id)
     {
-        $this->client_id = $client_id;
+        $this->client_id   = $client_id;
+        $this->fileToZip   = array();
+        
         ini_set('max_execution_time', 300);
     }
 
@@ -18,30 +21,34 @@ class download
      * @param  (array) data
      * @return (obj)   zip file
      */
-    public function getZipFile($data, $user_id)
+    public function getZipFile($data, $user_id, $temp)
     {
-        $this->user_id = $user_id;
+        $this->user_id    = $user_id;
+        $this->tempfolder = 'temp'.$temp;
 
-        $zip_path  = __DIR__.'/../../../../../../web/zip/myzip.zip';
+        $zip_path      = __DIR__.'/../../../../../../web/zip/'.$this->tempfolder.'/';
+        $musiques_path = __DIR__.'/../../../../../../web/musiques/'.$this->tempfolder.'/';
+
+        mkdir($zip_path, 0777);
+        mkdir($musiques_path, 0777);
 
         foreach ($data as $key => $value) {
-            $local_path = str_replace(" ", "_", $data[$key]['title'].".mp3");
-            $local_path = str_replace("/", "_", $data[$key]['title'].".mp3");
-            $path = $data[$key]['link'];
+            $title = str_replace(" ", "_", $data[$key]['title'].".mp3");
+            $title = str_replace("/", "_", $data[$key]['title'].".mp3");
+            $sc_path = $data[$key]['link'];
             
-            $this->save_localy($path, $local_path);
+            $this->save_localy($sc_path, $title, $musiques_path);
         }
 
-        $zipfile = $this->create_zip($this->fileToZip, $zip_path);
-
-        // Dl le fichier
-        header('Content-Disposition: attachment; filename=' . basename($zip_path));
-        //readfile($zip_path);
+        $zipfile = $this->create_zip($this->fileToZip, $zip_path.'mysoundcloud.zip');
 
         // Supprime les fichiers locaux
         foreach ($this->fileToZip as $file) {
             unlink($file);
         }
+
+        //Ecrit l'url du zip en cache
+        $this->setZipurlCache($zip_path);
 
         return $zip_path;
     }
@@ -51,22 +58,24 @@ class download
      * @param url
      * @param save_path
      */
-    function save_localy($url, $save_path)
+    function save_localy($sc_path, $title, $musiques_path)
     {
-        set_include_path('__DIR__."/../../../../../../web/musiques/');
-        // Enregistre le fichier en local
-        // ! Supprimer les fichiers en local lorsque dl terminer
-        $f = fopen( $save_path , 'w+', true);
-        $handle = fopen($url , "rb");
+        set_include_path($musiques_path);
+        $f = fopen( 'musiques/'.$title , 'w+', true);
+        $handle = fopen($sc_path , "rb");
          
         while (!feof($handle)) {
             $contents = fread($handle, 8192);
             fwrite($f , $contents);
         }
-
-        chmod($save_path, '777');
+        
         fclose($handle);
-        array_push($this->fileToZip, $save_path);
+
+        $old = umask(0);
+        chmod('musiques/'.$title, '0777');
+        umask($old);
+        
+        array_push($this->fileToZip, 'musiques/'.$title);
         return;
     }
 
@@ -77,40 +86,67 @@ class download
     {
         //if the zip file already exists and overwrite is false, return false
         if(file_exists($destination) && !$overwrite) { return false; }
-        //vars
+
         $valid_files = array();
-        //if files were passed in...
+
         if(is_array($files)) {
-            //cycle through each file
             foreach($files as $file) {
-                //make sure the file exists
                 if(file_exists($file)) {
                     $valid_files[] = $file;
                 }
             }
         }
+        
         //if we have good files...
         if(count($valid_files)) {
-            //create the archive
             $zip = new \ZipArchive();
             if($zip->open($destination,$overwrite ? \ZIPARCHIVE::OVERWRITE : \ZIPARCHIVE::CREATE) !== true) {
                 return false;
             }
-            //add the files
             foreach($valid_files as $file) {
                 $zip->addFile($file,$file);
             }
+            
             //debug
             //echo 'The zip archive contains ',$zip->numFiles,' files with a status of ',$zip->status;
             
-            //close the zip -- done!
             $zip->close();
             
-            //check to make sure the file exists
             return file_exists($destination);
         } else {
             return false;
         }
+    }
+
+    /**
+     * Sauvegarde l'url du zip en cache
+     */
+    public function setZipurlCache($zip_path)
+    {
+        $fp = fopen( $zip_path.'cache.txt' , 'a+');
+        fwrite($fp, $zip_path.'mysoundcloud.zip');
+        fclose($fp);
+
+        chmod($zip_path.'cache.txt', '0777');
+        return;
+    }
+
+    public function getZipurlCache($temp)
+    {
+        $cache = __DIR__.'/../../../../../../web/zip/temp'.$temp.'/cache.txt';
+        $file  = file_get_contents($cache);
+        
+        $old = umask(0);
+        chmod($file, '0777');
+        umask($old);
+
+        header('Content-Disposition: attachment; filename=' . basename($file));
+        readfile($file);
+
+        unlink($file);
+        unlink($cache);
+
+        return;
     }
 
 }

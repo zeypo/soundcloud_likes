@@ -149,7 +149,7 @@ class soundcloud
             fwrite($f , $contents);
         }
 
-        chmod($save_path, '777');
+        chmod($save_path, '0755');
         fclose($handle);
         array_push($this->fileToZip, $save_path);
 

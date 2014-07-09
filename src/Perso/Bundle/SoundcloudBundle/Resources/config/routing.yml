@@ -1,9 +1,15 @@
 soundcloud_homepage:
     path:     /
     defaults: { _controller: PersoSoundcloudBundle:Main:index }
+
 soundcloud_getlikes:
     path: /likes
     defaults: { _controller: PersoSoundcloudBundle:Main:getLikes }
+
 soundcloud_download:
-    path: /download
+    path: /download/{temp}
     defaults: { _controller: PersoSoundcloudBundle:Main:getZip }
+
+soundcloud_getfile:
+    path: /getfile/{temp}
+    defaults: { _controller: PersoSoundcloudBundle:Main:getFile }
