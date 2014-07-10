@@ -74,19 +74,24 @@
             {% if likes is defined %}
                 $(function()
                 {
-                    $('#download').on('click', function(e)
+                    $('#download, #all_download').on('click', function(e)
                     {
                         e.preventDefault();
-                        var data = $("#download-form").serializeArray();
-                        var likes = {};
+                        var data   = $("#download-form").serializeArray(),
+                            dltype = $(this).attr('id');
+                            likes  = {}
 
                         $('article.song').each(function()
                         {
-                            if($(this).find('.checkbox').prop('checked')){
-                                var id    = $(this).find('input[name=id]').val(),
-                                    title = $(this).find('input[name=title]').val(),
-                                    link  = $(this).find('input[name=link]').val();
-                                
+                            var id    = $(this).find('input[name=id]').val(),
+                                title = $(this).find('input[name=title]').val(),
+                                link  = $(this).find('input[name=link]').val();
+                            
+                            if($(this).find('.checkbox').prop('checked') && dltype == 'download') {
+                                likes[id] = {};
+                                likes[id]['title'] = title;
+                                likes[id]['link']  = link;
+                            } else if (dltype == 'all_download') {
                                 likes[id] = {};
                                 likes[id]['title'] = title;
                                 likes[id]['link']  = link;
