@@ -1,0 +1,76 @@
+{% set rand = random(1000) %}
+<form action="{{ path('soundcloud_download', { 'temp': rand}) }}" method="post" accept-charset="utf-8" id="download-form">
+    <nav class="nav">
+        <div class="info_select_song nav-grid">
+            <p><span>3 chansons</span> sont sélectionnées</p>
+        </div>                
+        <div class="download_bt nav-grid">
+            <input type="submit" name="submit" value="Telecharger les chansons selectionnees" id="download">
+             <input type="submit" name="submit" value="Tout telecharger" id="all_download">
+        </div>
+        <div class="song_organisation nav-grid">
+            <ul>
+                <li><img src="../img/orga-list.svg"></li>
+                <li class="select"><img src="../img/orga-grid.svg"></li>
+            </ul>
+        </div>
+    </nav>
+    {% for id, like in likes %}
+        <article class="song">
+            <div class="content-song ">
+                <figure><img src="{{like.cover}}"></figure>
+                <div class="content-info">
+                    <div class="info">
+                        <h3>{{like.artist |  truncate(14, false, '...') }}</h3>
+                        <h4>{{like.title |  truncate(30, false, '...') }}</h4>
+                    </div>
+                    <div class="checkbox_content">
+                        <input type="checkbox" name="id" value="{{id}}" class="checkbox">
+                    </div>
+                    <p style="display:none;"><input type="text" name="title" value="{{like.title}}"></p>
+                    <p style="display:none;"><input type="text" name="link" value="{{like.link}}"></p>
+                </div> 
+            <div>
+        </article>
+    {% endfor %}
+</form>
+<script>
+$(function(){
+    $('#download, #all_download').on('click', function(e)
+    {
+        e.preventDefault();
+        var data   = $("#download-form").serializeArray(),
+            dltype = $(this).attr('id');
+            likes  = {}
+
+        $('article.song').each(function()
+        {
+            var id    = $(this).find('input[name=id]').val(),
+                title = $(this).find('input[name=title]').val(),
+                link  = $(this).find('input[name=link]').val();
+            
+            if($(this).find('.checkbox').prop('checked') && dltype == 'download') {
+                likes[id] = {};
+                likes[id]['title'] = title;
+                likes[id]['link']  = link;
+            } else if (dltype == 'all_download') {
+                likes[id] = {};
+                likes[id]['title'] = title;
+                likes[id]['link']  = link;
+            }
+        })
+
+        var data = {'user_id':'{{user_id}}', 'likes':likes};
+
+        $.ajax({
+            type: "POST",
+            url: "{{ path('soundcloud_download', { 'temp': rand}) }}",
+            data: data,
+            success: function()
+            {
+                document.location = "{{ path('soundcloud_getfile', {'temp': rand}) }}";
+            }
+        });
+    });
+})
+</script>

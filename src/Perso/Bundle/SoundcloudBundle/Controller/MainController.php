@@ -30,7 +30,7 @@ class MainController extends Controller
         
         $data = $this->get('api.soundcloud')->show_likes($user_id);
         
-        return $this->render('PersoSoundcloudBundle:Default:index.html.twig', array('likes'=>$data[0], 'user_id'=>$data[1], 'urlzip'=>''));
+        return $this->render('PersoSoundcloudBundle:Default:wall.html.twig', array('likes'=>$data[0], 'user_id'=>$data[1], 'urlzip'=>''));
     }
 
     /**
