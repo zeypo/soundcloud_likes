@@ -83,7 +83,7 @@ class soundcloud
             
             foreach ($tracks as $k => $track) {
                 $id = $track['id'];
-                $img = isset($track['artwork_url']) ? str_replace('large', 't500x500', $track['artwork_url']) : '../img/logo_sound_500x500.png';
+                $img = isset($track['artwork_url']) ? str_replace('large', 't500x500', $track['artwork_url']) : '../../web/img/substitution.png';
 
                 $likes[$id]['title']   = $track['title'];
                 $likes[$id]['artist']  = $track['user']['username'];

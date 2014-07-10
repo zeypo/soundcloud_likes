@@ -1,8 +1,8 @@
 body{background: #f2f2f2; font-family: 'Open Sans Condensed', sans-serif;}
 *{margin: 0; padding: 0;}
-.header{position: fixed; z-index: 2000; height: 30px; padding: 15px 0 24px; background-color: #F76700;background-image: -webkit-linear-gradient(#F76700,#FA3219);background-image: linear-gradient(#F76700,#FA3219);border-color: #C53421; text-align: center; width: 100%; overflow: hidden; -webkit-box-shadow: inset 0px -4px 15px 0px rgba(0, 0, 0, 0.2);-moz-box-shadow:  0px -4px 15px 0px rgba(0, 0, 0, 0.2);-o-box-shadow:  0px -4px 15px 0px rgba(0, 0, 0, 0.2);box-shadow:  0px -4px 15px 0px rgba(0, 0, 0, 0.2);}
+.header{position: fixed; z-index: 2000; height: 40px; padding: 16px 0 24px; background-color: #F76700;background-image: -webkit-linear-gradient(#F76700,#FA3219);background-image: linear-gradient(#F76700,#FA3219);border-color: #C53421; text-align: center; width: 100%; overflow: hidden; -webkit-box-shadow: inset 0px -4px 15px 0px rgba(0, 0, 0, 0.2);-moz-box-shadow:  0px -4px 15px 0px rgba(0, 0, 0, 0.2);-o-box-shadow:  0px -4px 15px 0px rgba(0, 0, 0, 0.2);box-shadow:  0px -4px 15px 0px rgba(0, 0, 0, 0.2);}
 .header-content{position: absolute;  width: 600px; height:300px; top:50%; left: 50%; margin-top: -200px; margin-left: -300px; background-image: url(../../../img/bg_article_white.png); background-repeat: no-repeat; background-position: 0 125px;}
-	.header img{margin-bottom: 26px;width: 150px;}
+	.header img{width: 150px;}
 	.header form{position: relative; margin: 0 auto; width: 450px;} 
 		.header p{width: 400px; margin: 0 auto; color: #fff; font-size: 25px; line-height: 28px; padding: 30px 0 0 0;}
 		.header form input{border: 1px solid #f2f2f2; padding: 15px 25px; border-radius: 5px;}
@@ -10,7 +10,7 @@ body{background: #f2f2f2; font-family: 'Open Sans Condensed', sans-serif;}
 			.header form input:focus[type="text"]{outline: 0; border: 1px solid #b8b8b8;} 
 	.header form input[type="submit"]{position: absolute; right: 0px; padding: 17px 25px;height:10px; background-image: url(../../../img/search-icon.png); background-size: 40px 40px; background-repeat: no-repeat; background-color:#fff; background-position: center; cursor: pointer; border: none; border-radius: 4px;}
 		.header-search{overflow: hidden;}
-		.header-search img{float: left; margin-left: 60px; width: 60px;}
+		.header-search img{float: left; margin-left: 60px; width: 80px;}
 		.header-search form{width: auto;}
 			.header-search form input[type="submit"]{top: 3px; padding: 14px 20px;}
 			.header-search form input{ padding: 7px; border-radius: 5px;}
@@ -19,20 +19,40 @@ body{background: #f2f2f2; font-family: 'Open Sans Condensed', sans-serif;}
 			.header form input:active[type="submit"]{outline: 0;}
 			.header form input:focus[type="submit"]{outline: 0;}
 
-.content{padding:100px 50px; overflow: hidden; background: #f2f2f2; }
+.content{padding:220px 50px 50px; overflow: hidden; background: #f2f2f2;}
+	.content form{overflow: hidden;}
 	.content article{width: 20%; float: left; position: relative; margin-bottom: 20px; cursor: pointer;}
 		.content article .content-song{margin:0 auto; padding: 10px; width: 85%; background: #fff; border-radius: 4px;  box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.1);}
 		.content article .active{ box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.2);}
 
-		.content article figure { margin:0; margin-bottom: 10px; background-color: #2ecc71; }
-			.content article figure img{ width: 100%; margin: 0 auto; vertical-align: middle; }
+		.content article img{ width: 100%; margin: 0 auto; margin-bottom: 10px; background:#ececec;}
 			.content article .info{float: left; width: 80%; overflow: hidden;}
 			.content article .info h3, .content article .info h4{color: #1c1c1c;}
 			.content article h3{font-family: 'Fjalla One', sans-serif; text-transform: uppercase; font-size: 16px; line-height: 20px;}
-			.content article h4{font-size: 12px;}
+			.content article h4{font-size: 12px; font-weight: inherit;} 
 		.content-info{overflow: hidden;}
-		.checkbox_content{height: 30px; width: 30px; background-image: url(../img/checkbox-icon-close.svg);  background-size: 80px; background-position: center; border-radius: 10px; float: right;}
-		.content article .active .checcheckbox_contentkbox{background-image: url(../img/checkbox-icon.svg);}
+		.checkbox_content{height: 30px; width: 30px; /*background-image: url(../../../img/checkbox-icon-close.svg);  background-size: 80px; background-position: center; border-radius: 10px;*/ float: right;}
+		.content article .active .checkbox_content{background-image: url(../../../img/checkbox-icon.svg);}
 
-#download{position: fixed; bottom: 0;left: 0; width: 100%; background:#1c1c1c; border:none; color:#fff; padding: 10px 0;}
-	#download input:focus{outline: 0;}
+.list{}
+	.list article{width: 100%; position: relative; margin-bottom: 20px; cursor: pointer;margin-bottom: 0; }
+		.list article:nth-child(even){background-color: #fff;}
+		.list article:nth-child(odd){}
+			.list article .content-song{ line-height: 48px; box-shadow: none; border-radius: 0; padding: 2px; background:none; box-shadow: none; width: 100%;}
+				.list article .content-song img{width: 30px; margin: 8px 18px 8px 6px; border-radius:30px; float: left;}
+				.list article .content-song h3{display: inline-block; margin-right: 19px;} 
+				.list article .content-song h4{display: inline-block; margin-right: 19px; font-size: 16px;}
+.nav{position: fixed; z-index: 2000; background-color:#f2f2f2; top: 80px; width: 100%; left: 0; height: 80px;line-height: 80px; color:#1c1c1c;}
+	.nav:after{background: url(../../../img/bg_nav.png) center top no-repeat; background-co: none; z-index: 2000; content: ""; position: absolute; height: 70px; top: 80px; width: 100%; left: 0;}
+		.nav .nav-grid{float: left; width: 33.33%;}
+			.nav .info_select_song p{margin-left: 60px;}
+				.nav .info_select_song p span{font-weight: 700;}		
+		.nav .song_organisation{text-align: right;}
+			.nav .song_organisation ul{margin-right: 60px}
+				.nav .song_organisation ul li{display: inline-block; margin-left: 10px;}
+					.nav .song_organisation ul li img{ width: 25px; position: relative; top: 12px; opacity: 0.5; border-radius: 3px; border: 1px solid #f2f2f2; padding: 3px;}
+					.nav .song_organisation ul li.select img{opacity: 1; border: 1px solid #1c1c1c;}
+		.nav .download_bt{text-align: center;}
+			.nav .download_bt input:active[type="submit"]{outline: 0;}
+			.nav .download_bt input:focus[type="submit"]{outline: 0;}
+	.nav input{padding: 5px 10px; background:#fff; border-radius: 9px; font-size: 15px; border:0px;margin: 0 5px;}
