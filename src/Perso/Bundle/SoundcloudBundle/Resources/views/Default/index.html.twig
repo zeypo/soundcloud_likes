@@ -33,7 +33,7 @@
                         {% for id, like in likes %}
                             <article class="song">
                                 <div class="content-song ">
-                                    <img src="{{like.cover}}">
+                                    <figure><img src="{{like.cover}}"></figure>
                                     <div class="content-info">
                                         <div class="info">
                                             <h3>{{like.artist |  truncate(14, false, '...') }}</h3>
