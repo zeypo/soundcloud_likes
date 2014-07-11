@@ -30,8 +30,6 @@ body{background: #f2f2f2; font-family: 'Open Sans Condensed', sans-serif;}
 			.content article h3{font-family: 'Fjalla One', sans-serif; text-transform: uppercase; font-size: 16px; line-height: 20px;}
 			.content article h4{font-size: 12px;}
 		.content-info{overflow: hidden;}
-		.checkbox_content{height: 30px; width: 30px; background-image: url(../img/checkbox-icon-close.svg);  background-size: 80px; background-position: center; border-radius: 10px; float: right;}
-		.content article .active .checcheckbox_contentkbox{background-image: url(../img/checkbox-icon.svg);}
-
+		
 #download{position: fixed; bottom: 0;left: 0; width: 100%; background:#1c1c1c; border:none; color:#fff; padding: 10px 0;}
 	#download input:focus{outline: 0;}

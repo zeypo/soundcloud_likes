@@ -24,16 +24,15 @@
     <body>
         <header class="header">
             <div class="header-search">
-                <img src="../img/logo_sound_pxl.png">
+                <img src="../web/img/logo_sound_pxl.png">
                 <form action="{{ path('soundcloud_getlikes') }}" accept-charset="utf-8" method="post" id="soundcloud-url">
                     <input type="text" name="userurl" id="userurl" placeholder="Votre url soundcloud">
                     <input type="submit" name="getlikes" value="">  
                 </form>
             </div>
         </header>
-            <div id="loader" style="position:absolute; top:200px;text-align:center; width:100%;"></div>
-            <section class="content" id="content">
-            </section>
+        <div id="loader" style="position:absolute; top:200px;text-align:center; width:100%;"></div>
+        <section class="content" id="content"></section>
         <script>
         $(function(){
             formValidation.init($('#soundcloud-url'), "{{ path('soundcloud_getlikes') }}");

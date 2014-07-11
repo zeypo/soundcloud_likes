@@ -2,7 +2,7 @@
 <form action="{{ path('soundcloud_download', { 'temp': rand}) }}" method="post" accept-charset="utf-8" id="download-form">
     <nav class="nav">
         <div class="info_select_song nav-grid">
-            <p><span>3 chansons</span> sont sÃ©lectionnÃ©es</p>
+            <p><span>3 chansons</span> sont sélectionnées</p>
         </div>                
         <div class="download_bt nav-grid">
             <input type="submit" name="submit" value="Telecharger les chansons selectionnees" id="download">
@@ -10,15 +10,15 @@
         </div>
         <div class="song_organisation nav-grid">
             <ul>
-                <li><img src="../img/orga-list.svg"></li>
-                <li class="select"><img src="../img/orga-grid.svg"></li>
+                <li><img src="../web/img/orga-list.svg"></li>
+                <li class="select"><img src="../web/img/orga-grid.svg"></li>
             </ul>
         </div>
     </nav>
     {% for id, like in likes %}
         <article class="song">
             <div class="content-song ">
-                <figure><img src="{{like.cover}}"></figure>
+                <img src="{{like.cover}}">
                 <div class="content-info">
                     <div class="info">
                         <h3>{{like.artist |  truncate(14, false, '...') }}</h3>
