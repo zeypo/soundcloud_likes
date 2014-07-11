@@ -39,6 +39,7 @@
         {
             var data = self.$form.serialize();
             self.$loader.html('ceci est un loader...');
+            $('#content').empty();
 
             $.ajax({
                 type: "POST",
@@ -46,7 +47,7 @@
                 data: data,
                 success: function(data)
                 {
-                    $('#content').empty().html(data);
+                    $('#content').html(data);
                     self.$loader.empty();
                 }
             });

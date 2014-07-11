@@ -18,7 +18,7 @@
     {% for id, like in likes %}
         <article class="song">
             <div class="content-song ">
-                <figure><img src="{{like.cover}}"></figure>
+                <img src="{{like.cover}}">
                 <div class="content-info">
                     <div class="info">
                         <h3>{{like.artist |  truncate(14, false, '...') }}</h3>
@@ -37,42 +37,6 @@
 <script>
 $(function(){
     list.init();
-
-    $('#download, #all_download').on('click', function(e)
-    {
-        e.preventDefault();
-        var data   = $("#download-form").serializeArray(),
-            dltype = $(this).attr('id');
-            likes  = {}
-
-        $('article.song').each(function()
-        {
-            var id    = $(this).find('input[name=id]').val(),
-                title = $(this).find('input[name=title]').val(),
-                link  = $(this).find('input[name=link]').val();
-            
-            if($(this).find('.checkbox').prop('checked') && dltype == 'download') {
-                likes[id] = {};
-                likes[id]['title'] = title;
-                likes[id]['link']  = link;
-            } else if (dltype == 'all_download') {
-                likes[id] = {};
-                likes[id]['title'] = title;
-                likes[id]['link']  = link;
-            }
-        })
-
-        var data = {'user_id':'{{user_id}}', 'likes':likes};
-
-        $.ajax({
-            type: "POST",
-            url: "{{ path('soundcloud_download', { 'temp': rand}) }}",
-            data: data,
-            success: function()
-            {
-                document.location = "{{ path('soundcloud_getfile', {'temp': rand}) }}";
-            }
-        });
-    });
+    likes_collector.init("{{path('soundcloud_download', { 'temp': rand})}}", "{{path('soundcloud_getfile', {'temp': rand})}}");
 })
 </script>

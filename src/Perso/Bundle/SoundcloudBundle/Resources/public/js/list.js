@@ -21,10 +21,10 @@
             self.$songOrgaLi.removeClass('select');
             $(thelist).addClass('select');
             var index = self.$songOrgaLi.index(thelist);
-            if(index == 0){
+            if(index == 0) {
                 self.$content.addClass('list');
                 return;
-            }else{
+            } else {
                 self.$content.removeClass('list')
             }
             return orga;
