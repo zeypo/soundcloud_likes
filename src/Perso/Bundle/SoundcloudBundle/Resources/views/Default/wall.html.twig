@@ -2,7 +2,7 @@
 <form action="{{ path('soundcloud_download', { 'temp': rand}) }}" method="post" accept-charset="utf-8" id="download-form">
     <nav class="nav">
         <div class="info_select_song nav-grid">
-            <p><span>3 chansons</span> sont sélectionnées</p>
+            <p><span>3 chansons</span> sont s&eacutelectionn&eacutees</p>
         </div>                
         <div class="download_bt nav-grid">
             <input type="submit" name="submit" value="Telecharger les chansons selectionnees" id="download">
@@ -10,8 +10,8 @@
         </div>
         <div class="song_organisation nav-grid">
             <ul>
-                <li><img src="../web/img/orga-list.svg"></li>
-                <li class="select"><img src="../web/img/orga-grid.svg"></li>
+                <li><img src="../../web/img/orga-list.svg"></li>
+                <li class="select"><img src="../../web/img/orga-grid.svg"></li>
             </ul>
         </div>
     </nav>
@@ -37,42 +37,6 @@
 <script>
 $(function(){
     list.init();
-
-    $('#download, #all_download').on('click', function(e)
-    {
-        e.preventDefault();
-        var data   = $("#download-form").serializeArray(),
-            dltype = $(this).attr('id');
-            likes  = {}
-
-        $('article.song').each(function()
-        {
-            var id    = $(this).find('input[name=id]').val(),
-                title = $(this).find('input[name=title]').val(),
-                link  = $(this).find('input[name=link]').val();
-            
-            if($(this).find('.checkbox').prop('checked') && dltype == 'download') {
-                likes[id] = {};
-                likes[id]['title'] = title;
-                likes[id]['link']  = link;
-            } else if (dltype == 'all_download') {
-                likes[id] = {};
-                likes[id]['title'] = title;
-                likes[id]['link']  = link;
-            }
-        })
-
-        var data = {'user_id':'{{user_id}}', 'likes':likes};
-
-        $.ajax({
-            type: "POST",
-            url: "{{ path('soundcloud_download', { 'temp': rand}) }}",
-            data: data,
-            success: function()
-            {
-                document.location = "{{ path('soundcloud_getfile', {'temp': rand}) }}";
-            }
-        });
-    });
+    likes_collector.init("{{path('soundcloud_download', { 'temp': rand})}}", "{{path('soundcloud_getfile', {'temp': rand})}}");
 })
 </script>

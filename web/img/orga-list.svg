@@ -3,11 +3,9 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
-<rect x="6.333" y="7.125" fill="#1c1c1c" width="85.028" height="5.131"/>
-<rect x="6.333" y="20.482" fill="#1c1c1c" width="85.028" height="5.13"/>
-<rect x="6.333" y="33.839" fill="#1c1c1c" width="85.028" height="5.131"/>
-<rect x="6.333" y="47.196" fill="#1c1c1c" width="85.028" height="5.131"/>
-<rect x="6.333" y="60.553" fill="#1c1c1c" width="85.028" height="5.13"/>
-<rect x="6.333" y="73.911" fill="#1c1c1c" width="85.028" height="5.129"/>
-<rect x="6.333" y="87.266" fill="#1c1c1c" width="85.028" height="5.132"/>
+<rect x="6.334" y="7.125" fill="#1C1C1C" width="85.027" height="11.377"/>
+<rect x="6.334" y="25.438" fill="#1C1C1C" width="85.027" height="11.377"/>
+<rect x="6.334" y="43.751" fill="#1C1C1C" width="85.027" height="11.377"/>
+<rect x="6.334" y="62.064" fill="#1C1C1C" width="85.027" height="11.377"/>
+<rect x="6.334" y="80.378" fill="#1C1C1C" width="85.027" height="11.377"/>
 </svg>

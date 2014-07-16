@@ -8,8 +8,9 @@
         <link href='http://fonts.googleapis.com/css?family=Fjalla+One|Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'>
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         {% javascripts
-            '@PersoSoundcloudBundle/Resources/public/js/*'
+            '@PersoSoundcloudBundle/Resources/public/js/list.js'
             '@PersoSoundcloudBundle/Resources/public/js/app/form_validation.js'
+            '@PersoSoundcloudBundle/Resources/public/js/app/likes_collector.js'
             output="js/compiled/script.js" %}
             <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
@@ -23,12 +24,13 @@
 
     <body>
         <header class="header">
-            <div class="header-search">
-                <img src="../web/img/logo_sound_pxl.png">
+            <div class="header-content">
+                <img src="../../web/img/logo_sound_pxl.png">
                 <form action="{{ path('soundcloud_getlikes') }}" accept-charset="utf-8" method="post" id="soundcloud-url">
                     <input type="text" name="userurl" id="userurl" placeholder="Votre url soundcloud">
-                    <input type="submit" name="getlikes" value="">  
+                    <input type="submit" name="getlikes" value="">
                 </form>
+                <p>Rentre l'url de ton profil Soundcloud ou celui de ton pote et telecharge tous les likes que tu veux</p>
             </div>
         </header>
         <div id="loader" style="position:absolute; top:200px;text-align:center; width:100%;"></div>

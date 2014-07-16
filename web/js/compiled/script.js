@@ -1,3 +1,40 @@
+;(function(window) {
+
+    list =
+    {
+        $songOrgaLi : null,
+        $content    : null,
+
+        init: function()
+        {
+            self.$songOrgaLi = $('.song_organisation li');
+            self.$content = $('.content');
+
+            self.$songOrgaLi.on('click', function(orga)
+            {
+                self.organise(orga, this);
+            })
+        },
+
+        organise: function(orga, thelist)
+        {
+            self.$songOrgaLi.removeClass('select');
+            $(thelist).addClass('select');
+            var index = self.$songOrgaLi.index(thelist);
+            if(index == 0){
+                self.$content.addClass('list');
+                return;
+            }else{
+                self.$content.removeClass('list')
+            }
+            return orga;
+        }
+    }
+
+    var self = list;
+    window.list = list;
+
+})(window)
 ;(function(window){
 
     formValidation = 
@@ -31,24 +68,14 @@
                 alert('mauvaise string');
                 return;
             }
-            $('.header').stop().animate({
-                'top':'-200%'
-            })
 
             self.sendDatas();
         },
 
         sendDatas: function()
         {
-            $('.header').css({'height':'38px'})
-            $('.header div').addClass('header-search').removeClass('header-content');
-            $('.header p').css({'display':'none'})
-            $('.header').animate({
-                'top':'0'
-            })
             var data = self.$form.serialize();
             self.$loader.html('ceci est un loader...');
-            $('#content').empty();
 
             $.ajax({
                 type: "POST",
@@ -56,7 +83,7 @@
                 data: data,
                 success: function(data)
                 {
-                    $('#content').html(data);
+                    $('#content').empty().html(data);
                     self.$loader.empty();
                 }
             });
